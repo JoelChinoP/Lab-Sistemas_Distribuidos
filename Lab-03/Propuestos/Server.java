@@ -103,6 +103,20 @@ public class Server {
         return true;
     }
 
+    synchronized void remove(int id) {
+    String disconnectedClient = "";
+        for (int i = 0; i < al.size(); ++i) {
+            ClientThread ct = al.get(i);
+            if (ct.id == id) {
+                disconnectedClient = ct.getUsername();
+                al.remove(i);
+                break;
+            }
+        }
+        broadcast(notif + disconnectedClient + " has left the chat room." + notif);
+    }
+
+
 
 
 }
