@@ -116,7 +116,9 @@ public class Server {
         broadcast(notif + disconnectedClient + " has left the chat room." + notif);
     }
 
+    public static void(String[] args) {
 
+    }
 
 
 }
