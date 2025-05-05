@@ -199,5 +199,23 @@ public class Client {
         client.disconnect();
     }
 
-
+    class ListenFromServer extends Thread {
+        public void run() {
+            while(true) {
+                try {
+                    // read the message form the input datastream
+                    String msg = (String) sInput.readObject();
+                    // print the message
+                    System.out.println(msg);
+                    System.out.print("> ");
+                }
+                catch(IOException e) {
+                    display(notif + "Server has closed the connection: " + e + notif);
+                    break;
+                }
+                catch(ClassNotFoundException e2) {
+                }
+            }
+        }
+    }
 }
