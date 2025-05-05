@@ -59,6 +59,11 @@ public class Server {
         } catch (Exception e) {}
     }
 
+    private void display(String msg) {
+        String time = sdf.format(new Date()) + " " + msg;
+        System.out.println(time);
+    }
+
     private synchronized boolean broadcast(String message) {
         String time = sdf.format(new Date());
         String[] w = message.split(" ", 3);
