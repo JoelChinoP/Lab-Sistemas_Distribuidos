@@ -152,6 +152,7 @@ public class Server {
         ClientThread(Socket socket) {
             id = ++uniqueId;
             this.socket = socket;
+            System.out.println("Thread trying to create Object Input/Output Streams");
             try {
                 sOutput = new ObjectOutputStream(socket.getOutputStream());
                 sInput = new ObjectInputStream(socket.getInputStream());
@@ -165,6 +166,15 @@ public class Server {
             catch (ClassNotFoundException e) {}
             date = new Date().toString() + "\n";
         }
+
+        public String getUsername() {
+            return username;
+        }
+
+        public void setUsername(String username) {
+            this.username = username;
+        }
+
     }
 
 
