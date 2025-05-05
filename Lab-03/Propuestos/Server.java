@@ -216,6 +216,22 @@ public class Server {
             close();
         }
 
+        private void close() {
+            try {
+                if(sOutput != null) sOutput.close();
+            }
+            catch(Exception e) {}
+            try {
+                if(sInput != null) sInput.close();
+            }
+            catch(Exception e) {};
+            try {
+                if(socket != null) socket.close();
+            }
+            catch (Exception e) {}
+        }
+
+
 
     }
 
