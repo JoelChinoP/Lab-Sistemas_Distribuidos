@@ -231,11 +231,19 @@ public class Server {
             catch (Exception e) {}
         }
 
-
-
+        private boolean writeMsg(String msg) {
+            if(!socket.isConnected()) {
+                close();
+                return false;
+            }
+            try {
+                sOutput.writeObject(msg);
+            }
+            catch(IOException e) {
+                display(notif + "Error sending message to " + username + notif);
+                display(e.toString());
+            }
+            return true;
+        }
     }
-
-
-
-
 }
