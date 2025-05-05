@@ -140,6 +140,34 @@ public class Server {
         server.start();
     }
 
+    class ClientThread extends Thread {
+        Socket socket;
+        ObjectInputStream sInput;
+        ObjectOutputStream sOutput;
+        int id;
+        String username;
+        ChatMessage cm;
+        String date;
+
+        ClientThread(Socket socket) {
+            id = ++uniqueId;
+            this.socket = socket;
+            try {
+                sOutput = new ObjectOutputStream(socket.getOutputStream());
+                sInput = new ObjectInputStream(socket.getInputStream());
+                username = (String) sInput.readObject();
+                broadcast(notif + username + " has joined the chat room." + notif);
+            }
+            catch (IOException e) {
+                display("Exception creating new Input/output Streams: " + e);
+                return;
+            }
+            catch (ClassNotFoundException e) {}
+            date = new Date().toString() + "\n";
+        }
+    }
+
+
 
 
 }
