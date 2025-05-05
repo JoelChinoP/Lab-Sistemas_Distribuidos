@@ -175,6 +175,48 @@ public class Server {
             this.username = username;
         }
 
+        public void run() {
+            boolean keepGoing = true;
+            while(keepGoing) {
+                try {
+                    cm = (ChatMessage) sInput.readObject();
+                }
+                catch (IOException e) {
+                    display(username + " Exception reading Streams: " + e);
+                    break;
+                }
+                catch(ClassNotFoundException e2) {
+                    break;
+                }
+
+                String message = cm.getMessage();
+                switch(cm.getType()) {
+                    case ChatMessage.MESSAGE:
+                        boolean confirmation = broadcast(username + ": " + message);
+                        if(confirmation == false){
+                            String msg = notif + "Sorry. No such user exists." + notif;
+                            writeMsg(msg);
+                        }
+                        break;
+                    case ChatMessage.LOGOUT:
+                        display(username + " disconnected with a LOGOUT message.");
+                        keepGoing = false;
+                        break;
+                    case ChatMessage.WHOISIN:
+                        writeMsg("List of the users connected at " + sdf.format(new Date()) + "\n");
+                        for(int i = 0; i < al.size(); ++i) {
+                            ClientThread ct = al.get(i);
+                            writeMsg((i+1) + ") " + ct.username + " since " + ct.date);
+                        }
+                        break;
+                }
+            }
+
+            remove(id);
+            close();
+        }
+
+
     }
 
 
