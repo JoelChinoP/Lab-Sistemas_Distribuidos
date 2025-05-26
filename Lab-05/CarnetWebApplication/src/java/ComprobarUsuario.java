@@ -27,5 +27,23 @@ public class ComprobarUsuario {
     public String hello(@WebParam(name = "name") String txt) {
         return "Hello " + txt + " !";
     }
-
+    
+    @WebMethod(operationName = "Comprobar")
+    public boolean comprobar (
+            @WebParam(name = "usuario") String user,
+            @WebParam(name = "contrasenia") String contra
+            ) {
+        try {
+            // Validar que no sean null o vacíos
+            if (user == null || contra == null || user.trim().isEmpty() || contra.trim().isEmpty()) {
+                throw new IllegalArgumentException("Usuario y contraseña son obligatorios");
+            }
+            
+            return usuarioValido.equals(user.trim()) && contraseniaValida.equals(contra);
+            
+        } catch (IllegalArgumentException e) {
+            // Lanzar la excepción para que sea manejada por JSP
+            throw new RuntimeException("Error al validar credenciales: " + e.getMessage());
+        }
+    }
 }
